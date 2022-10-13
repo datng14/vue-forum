@@ -42,7 +42,9 @@ jobs:
           working_directory: ~/
       - store_artifacts:
           path: ~/my-project.tar.gz
-      - heroku/deploy-via-git
+      - heroku/deploy-via-git:
+        requires:
+            - build
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
