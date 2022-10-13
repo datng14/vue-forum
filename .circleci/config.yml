@@ -37,9 +37,11 @@ jobs:
       - checkout
       - heroku/install
       - run:
-          command: >
-            echo "The command above installs Heroku, the command below deploys.
-            What you do inbetween is up to you!"
+          command: tar -czvf my-project.tar.gz ~/project
+          name: Bundle our project project
+          working_directory: ~/
+      - store_artifacts:
+          path: ~/my-project.tar.gz
       - heroku/deploy-via-git
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
