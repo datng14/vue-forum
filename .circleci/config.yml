@@ -31,13 +31,13 @@ jobs:
           name: Check lint
           command: npm run lint
 
-  deploy_heroku:
-    executor: heroku/default
-    steps:
-      - checkout
-      - run:
-          name: Deploy Main to Heroku
-          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
+  # deploy_heroku:
+  #   executor: heroku/default
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Deploy Main to Heroku
+  #         command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
       #     command: tar -czvf my-project.tar.gz ~/project
       #     name: Bundle our project project
       #     working_directory: ~/
@@ -52,4 +52,10 @@ workflows:
   orb-free-workflow:
     jobs:
       - test
-      - deploy_heroku
+      - build
+      - heroku/deploy-via-git:
+          requires:
+          - build # only run deploy-via-git job if the build job has completed
+          filters:
+          branches:
+              only: master # only run deploy-via-git job on main branch
