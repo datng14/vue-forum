@@ -32,26 +32,21 @@ jobs:
           command: npm run lint
 
   deploy:
-    executor: heroku/default
-    steps:
-      - checkout
-      - heroku/install
-      - run:
-          command: tar -czvf my-project.tar.gz ~/project
-          name: Bundle our project project
-          working_directory: ~/
-      - store_artifacts:
-          path: ~/my-project.tar.gz
-      - heroku/deploy-via-git:
-          requires:
-              - build
+    docker:
+      - image: circleci/node:10.20.0
+    working_directory: ~/project
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - heroku/deploy-via-git
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   orb-free-workflow:
     jobs:
-      - test
       - deploy:
+        requires:
+          - test
         filters:
             branches:
               only: master
