@@ -1,7 +1,8 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
-
+orbs:
+  heroku: circleci/heroku@2.0.0
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -30,9 +31,23 @@ jobs:
           name: Check lint
           command: npm run lint
 
+  # deploy-heroku:
+  #   executor: heroku/default
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         command: tar -czvf my-project.tar.gz ~/project
+  #         name: Bundle our project project
+  #         working_directory: ~/
+  #     - store_artifacts:
+  #         path: ~/my-project.tar.gz
+  #     - heroku/create-review:
+  #         artifact-pattern: '*.tar.gz'
+  #         pipeline: PIPELINE-UUID
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   orb-free-workflow:
     jobs:
       - test
+      - heroku/deploy-via-git
