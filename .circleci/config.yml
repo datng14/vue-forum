@@ -31,23 +31,23 @@ jobs:
           name: Check lint
           command: npm run lint
 
-  # deploy-heroku:
-  #   executor: heroku/default
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         command: tar -czvf my-project.tar.gz ~/project
-  #         name: Bundle our project project
-  #         working_directory: ~/
-  #     - store_artifacts:
-  #         path: ~/my-project.tar.gz
-  #     - heroku/create-review:
-  #         artifact-pattern: '*.tar.gz'
-  #         pipeline: PIPELINE-UUID
+  deploy_heroku:
+    executor: heroku/default
+    steps:
+      - checkout
+      - run:
+          command: tar -czvf my-project.tar.gz ~/project
+          name: Bundle our project project
+          working_directory: ~/
+      - store_artifacts:
+          path: ~/my-project.tar.gz
+      - heroku/create-review:
+          artifact-pattern: '*.tar.gz'
+          pipeline: PIPELINE-UUID
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   orb-free-workflow:
     jobs:
-      # - test
+      - test
       - heroku/deploy-via-git
