@@ -36,7 +36,7 @@ jobs:
     steps:
       - checkout
       - run:
-        command: |
+        command:
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
       #     command: tar -czvf my-project.tar.gz ~/project
       #     name: Bundle our project project
