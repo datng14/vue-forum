@@ -47,5 +47,8 @@ workflows:
   orb-free-workflow:
     jobs:
       - test
-      - deploy
+      - deploy:
+        filters:
+            branches:
+              only: master
 
