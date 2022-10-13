@@ -50,4 +50,4 @@ workflows:
   orb-free-workflow:
     jobs:
       - test
-      - heroku/deploy-via-git
+      - deploy_heroku
