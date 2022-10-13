@@ -32,13 +32,13 @@ jobs:
           command: npm run lint
 
   deploy:
-    docker:
-      - image: circleci/node:10.20.0
-    working_directory: ~/project
-    steps:
-      - attach_workspace:
-          at: ~/project
-      - heroku/deploy-via-git
+    docker:
+      - image: circleci/node:10.20.0
+    working_directory: ~/project
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - heroku/deploy-via-git
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
