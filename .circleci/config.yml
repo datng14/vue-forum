@@ -52,7 +52,7 @@ workflows:
   orb-free-workflow:
     jobs:
       - test
-      - deploy_heroku
+      - deploy_heroku:
         requires:
         - build
         filters:
