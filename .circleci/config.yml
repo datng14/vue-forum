@@ -52,8 +52,4 @@ workflows:
   orb-free-workflow:
     jobs:
       - test
-      - deploy_heroku:
-        requires:
-          - build
-        branches:
-          only: master
+      - deploy_heroku
