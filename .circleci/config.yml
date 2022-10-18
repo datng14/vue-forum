@@ -2,21 +2,10 @@ version: 2.1
 
 orbs:
   heroku: circleci/heroku@2.0.0
-jobs:
-  create-review-app:
-    executor: heroku/default
-    steps:
-      - checkout
-      - run:
-          command: tar -czvf my-project.tar.gz ~/project
-          name: Bundle our project project
-          working_directory: ~/
-      - store_artifacts:
-          path: ~/my-project.tar.gz
-      - heroku/create-review:
-          artifact-pattern: '*.tar.gz'
-          pipeline: PIPELINE-UUID
 workflows:
-  heroku_review:
-    jobs:
-      - create-review-app
+    example-workflow:
+      jobs:
+        - heroku/deploy-via-git:
+            api-key: b95ab31d-8738-49ec-916a-009ea2d1c276
+            app-name: Vue forum
+            branch: master
