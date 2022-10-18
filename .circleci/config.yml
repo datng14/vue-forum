@@ -6,6 +6,5 @@ workflows:
     heroku_deploy:
       jobs:
         - heroku/deploy-via-git:
-            api-key: b95ab31d-8738-49ec-916a-009ea2d1c276
             app-name: Vue forum
             branch: master
