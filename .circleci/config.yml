@@ -6,43 +6,34 @@ orbs:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  test:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: cimg/node:15.1
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-    steps:
-      - checkout
-      - restore_cache:
-          # See the configuration reference documentation for more details on using restore_cache and save_cache steps
-          # https://circleci.com/docs/2.0/configuration-reference/?section=reference#save_cache
-          keys:
-            - node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
-      - run:
-          name: install packages
-          command: npm ci
-      - save_cache:
-          key: node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
-          paths:
-            - ~/.npm
-      - run:
-          name: Check lint
-          command: npm run lint
+  # test:
+  #   docker:
+  #     - image: cimg/node:15.1
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         keys:
+  #           - node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+  #     - run:
+  #         name: install packages
+  #         command: npm ci
+  #     - save_cache:
+  #         key: node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+  #         paths:
+  #           - ~/.npm
+  #     - run:
+  #         name: Check lint
+  #         command: npm run lint
 
   deploy:
-    executor: heroku/default
     steps:
-      - checkout
-      - heroku/install
+      - build
+      # - checkout
+      # - heroku/install
       - heroku/deploy-via-git
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
-workflows:
-  orb-free-workflow:
-    jobs:
-      - deploy:
-          requires:
-            - test
 
+workflows:
+  -deploy:
+    jobs:
+      # - build-job
+      - deploy
