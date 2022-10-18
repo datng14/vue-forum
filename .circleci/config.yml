@@ -33,7 +33,4 @@ jobs:
       - heroku/deploy-via-git
 
 workflows:
-  -deploy:
-    jobs:
-      # - build-job
-      - deploy
+  - deploy
