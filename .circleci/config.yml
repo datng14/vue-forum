@@ -5,7 +5,7 @@ orbs:
   heroku: circleci/heroku@2.0.0
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-jobs:
+# jobs:
   # test:
   #   docker:
   #     - image: cimg/node:15.1
@@ -25,12 +25,15 @@ jobs:
   #         name: Check lint
   #         command: npm run lint
 
-  deploy:
-    steps:
-      - build
+  # deploy:
+  #   steps:
+  #     - build
       # - checkout
       # - heroku/install
-      - heroku/deploy-via-git
+      # - heroku/deploy-via-git
 
 workflows:
-  - deploy
+  heroku_deploy:
+  jobs:
+    - build
+    - heroku/deploy-via-git
