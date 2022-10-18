@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   heroku: circleci/heroku@2.0.0
 workflows:
-    example-workflow:
+    heroku_deploy:
       jobs:
         - heroku/deploy-via-git:
             api-key: b95ab31d-8738-49ec-916a-009ea2d1c276
