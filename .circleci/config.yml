@@ -2,9 +2,21 @@ version: 2.1
 
 orbs:
   heroku: circleci/heroku@2.0.0
-
+jobs:
+  create-review-app:
+    executor: heroku/default
+    steps:
+      - checkout
+      - run:
+          command: tar -czvf my-project.tar.gz ~/project
+          name: Bundle our project project
+          working_directory: ~/
+      - store_artifacts:
+          path: ~/my-project.tar.gz
+      - heroku/create-review:
+          artifact-pattern: '*.tar.gz'
+          pipeline: PIPELINE-UUID
 workflows:
-  heroku_deploy:
+  heroku_review:
     jobs:
-      - build
-      - heroku/deploy-via-git
+      - create-review-app
